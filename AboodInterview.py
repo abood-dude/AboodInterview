@@ -1,4 +1,6 @@
 import json
+
+#Author: Abdel Hammad
 data = [json.loads(line) for line in open('data.json', 'r')]
 modifiedData=[]
 for d in data:
