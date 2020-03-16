@@ -1,9 +1,9 @@
-#Author: Abdel Hammad
+#Author: Abdel H
 import json
 import mysql.connector
 
 #Connect to database with already existing user database
-mydb =  mysql.connector.connect (host="localhost",user="root",passwd="passwordabood",database="userdb")
+mydb =  mysql.connector.connect (host="",user="root",passwd="",database="userdb")
 
 mycursor = mydb.cursor()
 
