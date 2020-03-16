@@ -1,6 +1,17 @@
-import json
-
 #Author: Abdel Hammad
+import json
+import mysql.connector
+
+#Connect to database with already existing user database
+mydb =  mysql.connector.connect (host="localhost",user="root",passwd="passwordabood",database="userdb")
+
+mycursor = mydb.cursor()
+
+#MySQL Query goes here to create table
+
+mycursor.execute("CREATE TABLE userevents (date DATE, count INTEGER(10))")
+
+#load json file
 data = [json.loads(line) for line in open('data.json', 'r')]
 modifiedData=[]
 for d in data:
@@ -17,10 +28,7 @@ for d in modifiedData:
             else:
                 usersLessThreeSeconds.append(d)
 
-# mysql.connect()
-# mysql.createTable("active_user_table")
-# mysql.createColumn(date)
-# mysql.createColumn(active_user_count)
+#Get Unique Dates
 uniqueDates = []
 for d in usersThreeSeconds:
     if d["event_date"] not in uniqueDates:
@@ -31,8 +39,11 @@ for date in uniqueDates:
     for d in usersThreeSeconds:
         if d["event_date"] == date:
             count+=1
-    print(date)
-    print(count)
-    # mysql.addValueToDate(date)
-    # mysql.addCounttoUserCount(count)
+    
+    query = ("INSERT INTO userdb.userevents (date, count) VALUES ("+date+","+str(count)+")")
+    mycursor.execute(query)
+    mydb.commit()
+
+#Close Connection
+mydb.close()
 
